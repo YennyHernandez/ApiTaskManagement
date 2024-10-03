@@ -6,6 +6,21 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddDbContext<DataContex>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+// Configuración de CORS
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("AllowFrontend", builder =>
+    {
+        builder.WithOrigins(
+            "http://localhost:5173",// URL del frontend en desarrollo (local)
+            "" // URL del frontend desplegado en producción
+        )
+        .AllowAnyHeader()
+        .AllowAnyMethod();
+    });
+});
+
 builder.Services.AddControllers(); // Registra los controladores
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -21,31 +36,13 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+// Configurar CORS
+app.UseCors("AllowFrontend"); 
+
 app.UseAuthorization();
 
-// Mapea los controladores (esto es lo que faltaba)
+// Mapea los controladores
 app.MapControllers();
-
-// Ejemplo adicional de endpoint que ya tienes
-var summaries = new[]
-{
-    "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-};
-
-app.MapGet("/weatherforecast", () =>
-{
-    var forecast = Enumerable.Range(1, 5).Select(index =>
-        new WeatherForecast
-        (
-            DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-            Random.Shared.Next(-20, 55),
-            summaries[Random.Shared.Next(summaries.Length)]
-        ))
-        .ToArray();
-    return forecast;
-})
-.WithName("GetWeatherForecast")
-.WithOpenApi();
 
 app.Run();
 

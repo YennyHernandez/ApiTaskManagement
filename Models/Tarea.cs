@@ -5,11 +5,10 @@ namespace webApi.Models
 {
     public class Tarea
     {
-        public int Id { get; set; }
+        public int Id { get; set; } //Key
         public string Title { get; set; } = string.Empty;
-        public int StateId { get; set; }
-
-        public virtual required State State { get; set; }
+        public int StateId { get; set; } //ForeignKey
+       
        
     }
 }

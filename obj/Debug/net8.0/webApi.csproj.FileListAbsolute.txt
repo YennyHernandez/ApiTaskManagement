@@ -135,3 +135,4 @@ C:\Users\yenif\OneDrive\Escritorio\taskManager\webApi\bin\Debug\net8.0\Newtonsof
 C:\Users\yenif\OneDrive\Escritorio\taskManager\webApi\bin\Debug\net8.0\Newtonsoft.Json.Bson.dll
 C:\Users\yenif\OneDrive\Escritorio\taskManager\webApi\obj\Debug\net8.0\webApi.RazorAssemblyInfo.cache
 C:\Users\yenif\OneDrive\Escritorio\taskManager\webApi\obj\Debug\net8.0\webApi.RazorAssemblyInfo.cs
+C:\Users\yenif\OneDrive\Escritorio\taskManager\webApi\obj\Debug\net8.0\webApi.sourcelink.json

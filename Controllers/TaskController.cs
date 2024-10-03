@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using webApi.Data;
@@ -17,12 +18,14 @@ namespace webApi.Controllers
             _contex = contex;
         }
 
+        // EndPoint para obtener lista de tareas
         [HttpGet(Name = "GetTasks")]
         public async Task<ActionResult<IEnumerable<Tarea>>> GetTasks()
         {
             return await _contex.Tareas.ToListAsync();
         }
 
+        // EndPoint para obtener lista de tareas por ID
         [HttpGet("{id}", Name = "GetTask")]
         public async Task<ActionResult<Tarea>> GetTask(int id)
         {
@@ -35,15 +38,37 @@ namespace webApi.Controllers
 
             return tarea;
         }
+        //EndPoint para obtener lista de estados para relacionar
+        [HttpGet("listStates", Name = "GetStates")]
+        public async Task<ActionResult<IEnumerable<State>>> GetStates()
+        {
+            var states = await _contex.States.ToListAsync();
+            return Ok(states);
+        }
+
+        // EndPoint para crear tarea
         [HttpPost]
         public async Task<ActionResult<Tarea>> PostTask(Tarea tarea)
         {
+            if (tarea == null)
+            {
+                return BadRequest("La tarea no puede ser nula.");
+            }
+
+            // Verifica que el estado asociado exista
+            var estadoExistente = await _contex.States.FindAsync(tarea.StateId);
+            if (estadoExistente == null)
+            {
+                return BadRequest("El estado especificado no existe.");
+            }
+
             _contex.Tareas.Add(tarea);
             await _contex.SaveChangesAsync();
 
             return CreatedAtAction(nameof(GetTask), new { id = tarea.Id }, tarea);
         }
 
+        // EndPoint para actualizar tarea existente
         [HttpPut("{id}")]
         public async Task<IActionResult> PutTask(int id, Tarea tarea)
         {
@@ -54,9 +79,10 @@ namespace webApi.Controllers
 
             _contex.Entry(tarea).State = EntityState.Modified;
             await _contex.SaveChangesAsync();
-            return Ok();
+            return Ok(tarea);
         }
 
+        // EndPoint para eliminar tarea existente
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteTask(int id)
         {
@@ -71,6 +97,6 @@ namespace webApi.Controllers
 
             return NoContent();
         }
-        
+
     }
 }

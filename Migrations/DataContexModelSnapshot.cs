@@ -35,7 +35,7 @@ namespace webApi.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("States");
+                    b.ToTable("States", (string)null);
                 });
 
             modelBuilder.Entity("webApi.Models.Tarea", b =>
@@ -57,7 +57,7 @@ namespace webApi.Migrations
 
                     b.HasIndex("StateId");
 
-                    b.ToTable("Tareas");
+                    b.ToTable("Tareas", (string)null);
                 });
 
             modelBuilder.Entity("webApi.Models.Tarea", b =>
