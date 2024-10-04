@@ -8,7 +8,16 @@ La API Gestor de Tareas es una aplicación desarrollada en .NET que permite gest
 - Entity Framework Core
 - ASP.NET
 - Base de datos SQL Server
+- Swagger
 
+## Instalación y Configuración del Backend  ⚙️
+
+1. Clonar el repositorio. git clone https://github.com/YennyHernandez/ApiTaskManagement.git
+2. Navegar al directorio. cd webApi
+3. Restaurar las dependencias. dotnet restore
+4. Iniciar el servidor. dotnet run
+5. El Backend estará corriendo en http://localhost:5228/  pero para acceder a la documentación de Swagger, dirígete a http://localhost:5228/swagger/index.html
+   
 ## Endpoints 🚀
 
 ![image](https://github.com/user-attachments/assets/c37ff77b-38f9-4f45-8eb3-8f784adb2b50)
@@ -89,3 +98,7 @@ La API Gestor de Tareas es una aplicación desarrollada en .NET que permite gest
 - **Método**: `DELETE`
 - **Ruta**: `/api/states/{id}`
 - **Descripción**: Elimina un estado específico por su ID.
+
+
+
+
